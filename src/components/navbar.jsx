@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
-        <div className="flex flex-row justify-between m-6">
-            <div className="text-2xl font-bold text-blue-600">
+        <div className="flex flex-row justify-between m-6 ">
+            <div className="text-2xl font-bold text-blue-600 ms-9">
                 <Link to="/" >
                     DevSync
                 </Link>
