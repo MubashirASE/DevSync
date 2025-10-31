@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
@@ -15,9 +15,9 @@ const SignUp = () => {
       [e.target.name]: e.target.value
     })
   }
-  const handleSubmit =async()=>{
-        const userData=await axios.post('http://localhost:5000/api/v1/user/signup', signupData)
-        console.log(userData.data)
+  const handleSubmit = async () => {
+    const userData = await axios.post('http://localhost:5000/api/v1/user/signup', signupData)
+    console.log(userData.data)
 
   }
 
@@ -97,7 +97,7 @@ const SignUp = () => {
           </div>
 
           <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}><Link to="/login">Submit</Link>
-</button>
+          </button>
         </div>
       </div>
     </div>

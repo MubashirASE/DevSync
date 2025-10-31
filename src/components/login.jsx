@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Login= () => {
@@ -9,7 +8,7 @@ const Login= () => {
     email: "",
     password: ""
   });
-
+const navigate=useNavigate()
   const handleChange = (e) => {
     setLoginData({
       ...loginData,
@@ -19,7 +18,11 @@ const Login= () => {
   const handleSubmit =async()=>{
         const userData=await axios.post('http://localhost:5000/api/v1/user/login', loginData)
         console.log(userData.data)
-
+         if (userData.data.success) {
+        localStorage.setItem("token", userData.data.token);
+        localStorage.setItem("user",JSON.stringify(userData.data.user))
+        navigate("/home")
+         }
   }
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -52,7 +55,7 @@ const Login= () => {
           </div>
 
           
-          <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}><Link to="/signup">Submit</Link></button>
+          <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}><Link to="/home">Submit</Link></button>
         </div>
       </div>
     </div>

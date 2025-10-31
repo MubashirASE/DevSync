@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-
 import SignUp from "./components/signup";
 import Login from "./components/login";
 import MainLayout from "./layout/mainlayout";
 import Home from "./components/home";
-
+import { ToastContainer } from 'react-toastify';
 function App() {
+  
   const appRouter = createBrowserRouter([
     {
       path: "/",
@@ -27,10 +27,14 @@ function App() {
       ],
     },
   ]);
-
   return (
     <>
+      
+      
+   
+
       <RouterProvider router={appRouter} />
+      <ToastContainer />
     </>
   );
 }
