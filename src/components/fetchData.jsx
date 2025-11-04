@@ -25,42 +25,49 @@ export const FetchData = () => {
 
 
    }
-   const allfetchData=async()=>{
-         const userData=await axiosInstance.get(`/standup/allData`);
-         console.log(userData)
-         setData(userData.data.data)
-      }
+   const allfetchData = async () => {
+      const userData = await axiosInstance.get(`/standup/allData`);
+      console.log(userData)
+      setData(userData.data.data)
+   }
    useEffect(() => {
       allfetchData()
-   }, [selectDate])
+   }, [])
    return (
       <div className="space-y-10 p-15">
          <div className="flex justify-between">
             <div className="text-2xl text-blue-600 font-medium">All Employee StandUP Details </div>
 
-            <div className="flex justify-between w-80">
+            <div className="flex justify-between gap-3">
                <input type="date" value={selectDate} className="border px-8 py-2 rounded-xl" onChange={(e) => { setSelectDate(e.target.value) }} />
                <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={fetchByDate}>Submit
                </button>
+               <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={allfetchData}>All Data
+               </button>
             </div>
          </div>
-         <div className="flex justify-between px-3 py-3 bg-gray-200 rounded-xl">
+         <div className="flex justify-between px-7 py-3 bg-gray-200 rounded-xl">
             <div>Name</div>
 
             <div className="">Today</div>
             <div>Yesterday</div>
             <div>Blockers</div>
+            <div>Date</div>
          </div>
 
          {
-            Data.map((a) => {
+            Data?.map((a) => {
+               const date = a.date.split('T')[0]
+               console.log(date)
                return (
                   <div className="flex justify-between ">
-                     <div className="w-42">{a.userId.name}</div>
+                     <div className="w-42 px-5">{a.userId.name}</div>
 
                      <div className="w-42">{a.today}</div>
                      <div className="w-42">{a.yesterday}</div>
                      <div className="w-42">{a.blockers}</div>
+                     <div className="w-26">{date}</div>
+
                   </div>
                )
             })
