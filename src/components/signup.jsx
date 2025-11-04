@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const [signupData, setSignUpData] = useState({
     name: "",
@@ -9,6 +8,30 @@ const SignUp = () => {
     password: "",
     role: ""
   })
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate()
+  const validateForm = () => {
+    let newErrors = {};
+    if (!signupData.name) {
+      newErrors.name = 'Email is required';
+    }
+    if (!signupData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(signupData.email)) {
+      newErrors.email = 'Email address is invalid';
+    }
+
+    if (!signupData.password) {
+      newErrors.password = 'Password is required';
+    } else if (signupData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters long';
+    }
+
+    setErrors(newErrors);
+    console.log(errors)
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (e) => {
     setSignUpData({
       ...signupData,
@@ -16,9 +39,14 @@ const SignUp = () => {
     })
   }
   const handleSubmit = async () => {
-    const userData = await axios.post('http://localhost:5000/api/v1/user/signup', signupData)
-    console.log(userData.data)
-
+    if (validateForm()) {
+      const userData = await axios.post('http://localhost:5000/api/v1/user/signup', signupData)
+      console.log(userData.data)
+      console.log(errors)
+      navigate("/login")
+    } else {
+      console.log('Form has validation errors.');
+    }
   }
 
   return (
@@ -39,6 +67,7 @@ const SignUp = () => {
               className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-blue-300 outline-none"
             />
           </div>
+          {errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
 
           <div>
             <label className="block mb-1 font-medium text-gray-700">Email</label>
@@ -51,6 +80,7 @@ const SignUp = () => {
               className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-blue-300 outline-none"
             />
           </div>
+          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
 
           <div>
             <label className="block mb-1 font-medium text-gray-700">Password</label>
@@ -63,6 +93,7 @@ const SignUp = () => {
               className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-blue-300 outline-none"
             />
           </div>
+          {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
 
           <div>
 
@@ -96,7 +127,7 @@ const SignUp = () => {
             </div>
           </div>
 
-          <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}><Link to="/login">Submit</Link>
+          <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}>Submit
           </button>
         </div>
       </div>

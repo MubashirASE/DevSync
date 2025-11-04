@@ -5,6 +5,8 @@ import Login from "./components/login";
 import MainLayout from "./layout/mainlayout";
 import Home from "./components/home";
 import { ToastContainer } from 'react-toastify';
+import StandupData from "./components/standupData";
+import CodeReviewer from "./components/codeReview";
 function App() {
   
   const appRouter = createBrowserRouter([
@@ -23,6 +25,14 @@ function App() {
         {
           path:"home",
           element:<Home/>
+        },
+        {
+          path:'standup',
+          element:<StandupData/>
+        },
+        {
+          path:'codeReview',
+          element:<CodeReviewer/>
         }
       ],
     },

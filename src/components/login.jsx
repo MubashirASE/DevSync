@@ -1,28 +1,59 @@
 import { useState } from "react";
 import axios from 'axios';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-
-const Login= () => {
-     const [loginData, setLoginData] = useState({
+const Login = () => {
+  const [loginData, setLoginData] = useState({
     email: "",
     password: ""
   });
-const navigate=useNavigate()
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate()
+  let newErrors = {};
+
+  const validateForm = () => {
+
+    if (!loginData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(loginData.email)) {
+      newErrors.email = 'Email address is invalid';
+    }
+
+    if (!loginData.password) {
+      newErrors.password = 'Password is required';
+    }
+    //  else if (loginData.password.length < 8) {
+    //   newErrors.password = 'Password must be at least 8 characters long';
+    // }
+
+    setErrors(newErrors);
+    console.log(errors)
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (e) => {
     setLoginData({
       ...loginData,
       [e.target.name]: e.target.value
     });
   };
-  const handleSubmit =async()=>{
-        const userData=await axios.post('http://localhost:5000/api/v1/user/login', loginData)
-        console.log(userData.data)
-         if (userData.data.success) {
-        localStorage.setItem("token", userData.data.token);
-        localStorage.setItem("user",JSON.stringify(userData.data.user))
+  const handleSubmit = async () => {
+    if (validateForm()) {
+      const user = await axios.post('http://localhost:5000/api/v1/user/login', loginData)
+      console.log(user.data)
+      if (user.data.success) {
+        localStorage.setItem("token", user.data.token);
+        localStorage.setItem("user", JSON.stringify(user.data.userData))
+        toast.success(user.data.message)
+
         navigate("/home")
-         }
+
+      } else {
+        toast.error(user.data.message)
+      }
+    }
+
   }
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -41,6 +72,7 @@ const navigate=useNavigate()
               className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-blue-300 outline-none"
             />
           </div>
+          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
 
           <div>
             <label className="block mb-1 font-medium text-gray-700">Password</label>
@@ -53,9 +85,10 @@ const navigate=useNavigate()
               className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-blue-300 outline-none"
             />
           </div>
+          {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
 
-          
-          <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}><Link to="/home">Submit</Link></button>
+
+          <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}>Submit</button>
         </div>
       </div>
     </div>
