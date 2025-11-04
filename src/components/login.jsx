@@ -47,7 +47,7 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(user.data.userData))
         toast.success(user.data.message)
 
-        navigate("/home")
+        navigate("/home/standup")
 
       } else {
         toast.error(user.data.message)

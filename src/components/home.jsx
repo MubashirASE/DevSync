@@ -1,36 +1,29 @@
-import { useContext, useEffect } from "react";
-import { MyContext } from "../contextData/contextData";
-import StandupData from "./standupData";
-import Login from "./login";
-import FetchData from "./fetchData";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 
 
 const Home = () => {
-    const { globalData, fetchData } = useContext(MyContext);
-    console.log("userDarara", globalData?.role)
-    useEffect(() => {
-        fetchData()
-    }, [])
+    const [textColor,setTextColor]=useState('')
+    const handleChange=()=>{
+    setTextColor(textColor === 'text-gray-400 text-sl font-bold' ? 'text-blue-500 text-sl font-bold' : 'text-gray-400 text-sl font-bold')
+    
+    }
     return (
         <div className="flex ">
-            <div className="h-180 w-70 px-15 flex-col space-y-6 pt-6" >
-                <div className="text-xl font-bold text-gray-400">Dashboard</div>
-                <div className="text-sl font-bold text-gray-400"><Link to='/standup'>StandUp Form</Link></div>
-                <div className="text-sl font-bold text-gray-400"><Link to='/codeReview'>CodeReview Form</Link></div>
+            <div className="h-180 w-60 px-15 flex-col space-y-6 pt-6" >
+                <div className="text-xl text-blue-700 font-bold text-gray-400">Dashboard</div>
+                
+                <div className={textColor} onClick={handleChange}><Link to='/home/standup'>StandUp Form</Link></div>
+                <div className={textColor} onClick={handleChange}><Link to='/home/codeReview'>Code Reviewer</Link></div>
+                <div className={textColor} onClick={handleChange}><Link to='/home/codeReviewRequest'>PR Request (Me)</Link></div>
 
                 
 
             </div>
             <div className="h-180 w-full bg-gray-100 pt-5">
-
-                {
-                    globalData?.role === "employee" ?
-                        <StandupData />
-                        : <FetchData />
-                }
-
+                <Outlet/>
             </div>
+            
         </div>
     );
 };
