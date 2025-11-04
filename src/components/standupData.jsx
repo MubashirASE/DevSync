@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance.jsx";
 import { toast } from "react-toastify";
+import { MyContext } from "../contextData/contextData.jsx";
+import FetchData from "./fetchData.jsx";
 
 const StandupData = () => {
+    const { globalData, fetchData } = useContext(MyContext);
+    console.log("userDarara", globalData?.role)
 
     const [standup, setStandup] = useState({
         yesterday: "",
@@ -36,43 +40,55 @@ const StandupData = () => {
 
         }
     };
-
+    useEffect(() => {
+        fetchData()
+    }, [])
     return (
         <div className="space-y-10 p-15">
-            <div className="text-2xl text-blue-600">Daily Standup</div>
 
-            <div className="flex flex-col space-y-10 ">
-             <textarea
-                type="text"
-                name="yesterday"
-                placeholder="Yesterday work"
-                value={standup.yesterday}
-                onChange={handleChange}
-                className="p-1.5"
-            />
+            {
+                globalData?.role === "employee" ?
+                    <div>
+                        <div className="text-2xl text-blue-600">Daily Standup</div>
 
-            <textarea
-                name="today"
-                placeholder="Today's plan"
-                value={standup.today}
-                onChange={handleChange}
-                className="p-1.5"
+                        <div className="flex flex-col space-y-10 ">
+                            <textarea
+                                type="text"
+                                name="yesterday"
+                                placeholder="Yesterday work"
+                                value={standup.yesterday}
+                                onChange={handleChange}
+                                className="p-1.5"
+                            />
 
-            />
+                            <textarea
+                                name="today"
+                                placeholder="Today's plan"
+                                value={standup.today}
+                                onChange={handleChange}
+                                className="p-1.5"
 
-            <textarea
-                name="blockers"
-                placeholder="Blockers?"
-                value={standup.blockers}
-                onChange={handleChange}
-                className="p-1.5"
+                            />
 
-            />
+                            <textarea
+                                name="blockers"
+                                placeholder="Blockers?"
+                                value={standup.blockers}
+                                onChange={handleChange}
+                                className="p-1.5"
 
-            <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}>Submit
-            </button>
+                            />
 
-            </div>
+                            <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}>Submit
+                            </button>
+
+                        </div>
+
+                    </div>
+                    : <FetchData/>
+            }
+
+
 
         </div>
     );

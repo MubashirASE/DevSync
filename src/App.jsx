@@ -7,41 +7,51 @@ import Home from "./components/home";
 import { ToastContainer } from 'react-toastify';
 import StandupData from "./components/standupData";
 import CodeReviewer from "./components/codeReview";
+import CodeReviewRequest from "./components/codeReviewRequest";
 function App() {
-  
+
   const appRouter = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout/>,
+      element: <MainLayout />,
       children: [
+
+        {
+          path: "home",
+          element: <Home />,
+          children: [
+
+            {
+              path: 'standup',
+              element: <StandupData />
+            },
+            {
+              path: 'codeReview',
+              element: <CodeReviewer />
+            }, 
+            {
+              path: 'codeReviewRequest',
+              element: <CodeReviewRequest />
+
+            }
+          ]
+        },
         {
           path: "signup",
-          element: <SignUp/>,
+          element: <SignUp />,
         },
         {
           path: "login",
-          element: <Login/>,
-        },
-        {
-          path:"home",
-          element:<Home/>
-        },
-        {
-          path:'standup',
-          element:<StandupData/>
-        },
-        {
-          path:'codeReview',
-          element:<CodeReviewer/>
+          element: <Login />,
         }
       ],
     },
   ]);
   return (
     <>
-      
-      
-   
+
+
+
 
       <RouterProvider router={appRouter} />
       <ToastContainer />

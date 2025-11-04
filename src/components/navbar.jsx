@@ -10,10 +10,11 @@ const Navbar = () => {
     const removeData = () => {
         localStorage.clear();
         navigate('/login')
+        fetchData()
     }
     useEffect(() => {
         fetchData()
-    }, [])
+    },[])
 
     return (
         <div className="flex flex-row justify-between m-6 ">

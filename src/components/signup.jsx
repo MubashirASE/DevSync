@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const SignUp = () => {
   const [signupData, setSignUpData] = useState({
     name: "",
@@ -25,6 +26,10 @@ const SignUp = () => {
       newErrors.password = 'Password is required';
     } else if (signupData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters long';
+    } else if (!/[A-Z]/.test(signupData.password)) {
+      newErrors.password = 'Password must be at least 1 uppercase';
+    } else if (!/[!@#$%^&*(),?":;{}|<>]/.test(signupData.password)) {
+      newErrors.password= 'Password must be at least 1 special character';
     }
 
     setErrors(newErrors);
@@ -40,12 +45,19 @@ const SignUp = () => {
   }
   const handleSubmit = async () => {
     if (validateForm()) {
-      const userData = await axios.post('http://localhost:5000/api/v1/user/signup', signupData)
-      console.log(userData.data)
-      console.log(errors)
-      navigate("/login")
-    } else {
-      console.log('Form has validation errors.');
+      const user = await axios.post('http://localhost:5000/api/v1/user/signup', signupData)
+      console.log(user.data)
+      if (user.data.success) {
+        localStorage.setItem("token", user.data.token);
+        localStorage.setItem("user", JSON.stringify(user.data.userData))
+        toast.success(user.data.message)
+
+        navigate("/")
+
+      } else {
+        toast.error(user.data.message)
+      }
+      
     }
   }
 
