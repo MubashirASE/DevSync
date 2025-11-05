@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import StandupData from "./components/standupData";
 import CodeReviewer from "./components/codeReview";
 import CodeReviewRequest from "./components/codeReviewRequest";
+import QuickLinks from "./components/quickLinks";
 function App() {
 
   const appRouter = createBrowserRouter([
@@ -17,7 +18,7 @@ function App() {
       children: [
 
         {
-          path: "home",
+          path: "/",
           element: <Home />,
           children: [
 
@@ -33,6 +34,9 @@ function App() {
               path: 'codeReviewRequest',
               element: <CodeReviewRequest />
 
+            },{
+              path:'quickLinks',
+              element:<QuickLinks/>
             }
           ]
         },

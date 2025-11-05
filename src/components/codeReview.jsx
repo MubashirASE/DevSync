@@ -68,16 +68,16 @@ const CodeReviewer = () => {
             <div className="space-y-10 p-15 bg-gray-100">
                 <div className="text-2xl text-blue-600">Code Review Tracker</div>
 
-                <div className="flex flex-row justify-between">
-                    <input
+                <div className="flex flex-row text-center grid grid-cols-4 mt-5 ">
+                    <div><input
                         type="text"
                         name="developerName"
                         value={globalData?.name}
                         className="p-1.5"
                         disabled
-                    />
+                    /></div>
 
-                    <input
+                    <div>          <input
                         name="prLink"
                         type="text"
 
@@ -86,7 +86,8 @@ const CodeReviewer = () => {
                         onChange={handleChange}
                         className="p-1.5"
 
-                    />
+                    /></div>
+
                     <select
                         name="reviewer"
                         value={review.reviewer}
@@ -103,10 +104,12 @@ const CodeReviewer = () => {
                     </select>
 
 
-
-
-                    <button className="rounded-xl bg-blue-500 text-white px-7 py-2" onClick={handleSubmit}>Submit
+                    <div className="flex justify-end">           
+                    <button className="rounded-xl bg-blue-500 text-white px-4 py-2 w-30" onClick={handleSubmit}>Submit
                     </button>
+                    </div>
+
+
 
                 </div>
                 <div className="flex text-center px-7 py-3 bg-gray-200 rounded-xl grid grid-cols-5 gap-7">
@@ -121,12 +124,12 @@ const CodeReviewer = () => {
                 {
                     allData.map((a) => {
                         return (
-                            <div className="flex text-center px-7 py-2 bg-gray-200 rounded-xl grid grid-cols-5 gap-7">
+                            <div className="flex text-center justify-center bg-gray-200 rounded-xl grid grid-cols-5 py-5 grid grid-cols-5 mt-3">
                                 <div className=" break-words">{a.developerName}</div>
                                 <div className=" row-span-3 row-span-2 break-words">{a.prLink}</div>
                                 <div className=" break-words">{a.reviewer}</div>
                                 <div className="">{a.status}</div>
-                                <div className="">{a.isDone}</div>
+                                <div className="">{a.isDone ? "Yes" : "No"}</div>
 
                             </div>
                         )
