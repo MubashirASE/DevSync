@@ -8,7 +8,7 @@ export const MyProvider = ({ children }) => {
      const [globalData, setGlobalData] = useState();
      const fetchData=()=>{
       const storedData = JSON.parse(localStorage.getItem('user'))
-      setGlobalData(storedData)
+    setGlobalData(storedData); 
      }
      useEffect(() => {
        fetchData()

@@ -9,6 +9,8 @@ import StandupData from "./components/standupData";
 import CodeReviewer from "./components/codeReview";
 import CodeReviewRequest from "./components/codeReviewRequest";
 import QuickLinks from "./components/quickLinks";
+import FetchData from "./components/fetchData";
+import AdminHomePage from "./components/adminHomePage";
 function App() {
 
   const appRouter = createBrowserRouter([
@@ -23,20 +25,28 @@ function App() {
           children: [
 
             {
-              path: 'standup',
+              path: '',
               element: <StandupData />
             },
             {
               path: 'codeReview',
               element: <CodeReviewer />
-            }, 
+            },
             {
               path: 'codeReviewRequest',
               element: <CodeReviewRequest />
 
-            },{
-              path:'quickLinks',
-              element:<QuickLinks/>
+            }, {
+              path: 'quickLinks',
+              element: <QuickLinks />
+            },
+            {
+              path: "/allStandUps",
+              element: <FetchData />
+            },
+            {
+              path:"/admin",
+              element:<AdminHomePage/>
             }
           ]
         },
