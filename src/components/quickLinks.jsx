@@ -35,15 +35,15 @@ export const QuickLinks = () => {
     const handleEdit = async (id) => {
         setEditId(id);
         const res = await axiosInstance.get(`/link/get/${id}`);
-        
         setFormData(res.data.result);
     };
-const handleDelete= async (id) => {
-        
+
+    const handleDelete = async (id) => {
         const res = await axiosInstance.delete(`/link/delete/${id}`);
-        console.log(res)
-        fetchByDate()
+        console.log(res);
+        fetchByDate();
     };
+
     const handleSubmit = async () => {
         try {
             if (editId) {
@@ -53,8 +53,9 @@ const handleDelete= async (id) => {
                 await axiosInstance.post(`/link/create`, formData);
                 toast.success("Link Created Successfully");
             }
-
             fetchByDate();
+            setFormData({ title: "", description: "", URL: "", category: "" });
+            setEditId(null);
         } catch (err) {
             toast.error("Something went wrong");
             console.log(err);
@@ -66,99 +67,109 @@ const handleDelete= async (id) => {
     }, []);
 
     return (
-        <div className="space-y-10 p-15">
-            <div className="text-2xl text-blue-600 font-medium">Quick Link</div>
+        <div className="p-10 space-y-10 bg-gray-50 min-h-screen">
+            <div className="text-3xl font-semibold text-blue-600  pb-2">
+                Quick Links
+            </div>
 
-            <div className="p-8 rounded-xl shadow-sm bg-gray-50 px-20">
-                <div className="grid grid-cols-2 gap-6">
-                   
+            <div className="p-8 rounded-2xl bg-white shadow-md hover:shadow-sm transition-all border border-gray-200">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="flex flex-col">
-                        <label>Title</label>
+                        <label className="text-sm font-medium text-gray-700 mb-1">Title</label>
                         <input
                             type="text"
                             name="title"
                             value={formData.title}
-                            className="border px-4 py-2 rounded-lg"
+                            className="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             onChange={handleInputChange}
                         />
                     </div>
 
                     <div className="flex flex-col">
-                        <label>Description</label>
+                        <label className="text-sm font-medium text-gray-700 mb-1">Description</label>
                         <textarea
                             name="description"
                             value={formData.description}
-                            className="border px-4 rounded-lg"
+                            className="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             onChange={handleInputChange}
                         />
                     </div>
 
                     <div className="flex flex-col">
-                        <label>URL</label>
+                        <label className="text-sm font-medium text-gray-700 mb-1">URL</label>
                         <input
                             type="text"
                             name="URL"
                             value={formData.URL}
-                            className="border px-4 py-2 rounded-lg"
+                            className="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             onChange={handleInputChange}
                         />
                     </div>
 
                     <div className="flex flex-col">
-                        <label>Category</label>
+                        <label className="text-sm font-medium text-gray-700 mb-1">Category</label>
                         <input
                             type="text"
                             name="category"
                             value={formData.category}
-                            className="border px-4 py-2 rounded-lg"
+                            className="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             onChange={handleInputChange}
                         />
                     </div>
-
                 </div>
 
-                <div className="flex justify-end mt-5">
+                <div className="flex justify-end mt-6">
                     <button
-                        className="rounded-xl bg-blue-500 text-white px-4 py-2"
+                        className="rounded-lg bg-blue-600 text-white px-6 py-2 font-medium hover:bg-blue-700 transition-all"
                         onClick={handleSubmit}
                     >
-                        {editId ? "Update" : "Create"}
+                        {editId ? "Update Link" : "Create Link"}
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-5 text-center px-7 py-3 bg-gray-200 rounded-xl">
+            <div className="grid grid-cols-5 text-center font-semibold bg-gray-200 text-blue-800 py-3 rounded-lg">
                 <div>Title</div>
                 <div>Description</div>
                 <div>URL</div>
                 <div>Category</div>
+                <div>Actions</div>
             </div>
 
-            {data.map((item) => (
-                <div
-                    key={item._id}
-                    className="grid grid-cols-5 text-center px-7 py-2 bg-gray-200 rounded-xl mt-2 items-center flex"
-                >
-                    <div>{item.title}</div>
-                    <div>{item.description}</div>
-                    <div className="truncate">{item.URL}</div>
-                    <div>{item.category}</div>
-                    <div className="gap-5">
-                        <button
-                        className="text-blue-600 underline col-span-4 text-left"
-                        onClick={() => handleEdit(item._id)}
+            <div className="space-y-2">
+                {data.map((item) => (
+                    <div
+                        key={item._id}
+                        className="grid grid-cols-5 text-center bg-white shadow-sm border border-gray-100 rounded-lg p-3 hover:shadow-md transition-all items-center"
                     >
-                        Edit
-                    </button>
-                        <button
-                        className="text-red-600 underline col-span-4 text-left ps-5"
-                        onClick={() => handleDelete(item._id)}
-                    >
-                        Delete
-                    </button></div>
-                    
-                </div>
-            ))}
+                        <div className="font-medium text-gray-800">{item.title}</div>
+                        <div className="text-gray-600 truncate">{item.description}</div>
+                        <a
+                            href={item.URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 underline break-words hover:text-blue-800"
+                        >
+                            {item.URL}
+                        </a>
+                        <div className="text-gray-700">{item.category}</div>
+                        <div className="flex justify-center gap-3">
+                            <button
+                                className="text-blue-600 hover:text-blue-800 font-medium"
+                                onClick={() => handleEdit(item._id)}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                className="text-red-600 hover:text-red-800 font-medium"
+                                onClick={() => handleDelete(item._id)}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

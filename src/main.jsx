@@ -5,7 +5,6 @@ import App from './App.jsx'
 import { MyProvider } from './contextData/contextData.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
 
     <MyProvider>
       <App />
@@ -14,5 +13,4 @@ createRoot(document.getElementById('root')).render(
 
 
 
-  </StrictMode>
 )

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance.jsx";
 import { toast } from "react-toastify";
 import { MyContext } from "../contextData/contextData.jsx";
-import FetchData from "./fetchData.jsx";
+import AdminHomePage from "./adminHomePage.jsx";
 
 const StandupData = () => {
     const { globalData, fetchData } = useContext(MyContext);
@@ -85,7 +85,7 @@ const StandupData = () => {
                         </div>
 
                     </div>
-                    : <FetchData/>
+                    : <AdminHomePage/>
             }
 
 

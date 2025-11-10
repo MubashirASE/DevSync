@@ -34,7 +34,7 @@ export const FetchData = () => {
       allfetchData()
    }, [])
    return (
-      <div className="space-y-10 p-15">
+      <div className="space-y-10 p-10">
          <div className="flex justify-between">
             <div className="text-2xl text-blue-600 font-medium">All Employee StandUP Details </div>
 
@@ -46,10 +46,10 @@ export const FetchData = () => {
                </button>
             </div>
          </div>
-         <div className="flex justify-between px-7 py-3 bg-gray-200 rounded-xl">
+         <div className="flex justify-between px-7 py-3 bg-gray-200 rounded-xl gird grid-cols-5 text-center">
             <div>Name</div>
 
-            <div className="">Today</div>
+            <div>Today</div>
             <div>Yesterday</div>
             <div>Blockers</div>
             <div>Date</div>
@@ -60,13 +60,13 @@ export const FetchData = () => {
                const date = a.date.split('T')[0]
                console.log(date)
                return (
-                  <div className="flex justify-between ">
-                     <div className="w-42 px-5">{a.userId.name}</div>
+                  <div className="flex justify-between grid grid-cols-5 gap-3">
+                     <div className="text-center">{a.userId.name}</div>
 
-                     <div className="w-42">{a.today}</div>
-                     <div className="w-42">{a.yesterday}</div>
-                     <div className="w-42">{a.blockers}</div>
-                     <div className="w-26">{date}</div>
+                     <div className="">{a.today}</div>
+                     <div className="">{a.yesterday}</div>
+                     <div className="text-center">{a.blockers}</div>
+                     <div className="text-center">{date}</div>
 
                   </div>
                )

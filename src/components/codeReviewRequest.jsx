@@ -8,7 +8,7 @@ const CodeReviewRequest = () => {
 
     const [data, setData] = useState([]);
     const [value, setValue] = useState(["true"]);
-    const [statusData, setStatusData] = useState(["Reviewer", "Merge"]);
+    const [statusData, setStatusData] = useState(["in Review", "Merge"]);
 
 
     const handleStatusChange = async (id, status) => {
@@ -87,9 +87,10 @@ const CodeReviewRequest = () => {
                                     return (
                                         <div className="flex text-center justify-center px-7 py-2 bg-gray-200 rounded-xl grid grid-cols-5 gap-7 mt-5">
                                             <div className=" break-words">{a.developerName}</div>
-                                            <div className=" row-span-3 row-span-2 break-words">{a.prLink}</div>
-                                            <div className=" break-words">{a.reviewer}</div>
-                                            <div className="">
+                                            <div className=" row-span-3 row-span-2 break-words text-blue-700">{a.prLink}</div>
+                                            <div>{a.reviewer.map((e) =>
+                                                <div className="ps-2">{e}</div>
+                                            )}</div>                                            <div className="">
                                                 <select
                                                     value={a.status || ""}
                                                     onChange={(e) => handleStatusChange(a._id, e.target.value)}
@@ -126,7 +127,7 @@ const CodeReviewRequest = () => {
                                 })
                             }
                         </div> : <div>
-                            <div className="flex text-center px-7 py-3 bg-gray-200 rounded-xl grid grid-cols-5 gap-7">
+                            <div className="font-semibold bg-gray-200 text-blue-800 py-3 rounded-lg text-center grid grid-cols-5 gap-7">
                                 <div>DeveloperName</div>
                                 <div className="">PR Link</div>
                                 <div>Reviewer</div>
@@ -139,8 +140,10 @@ const CodeReviewRequest = () => {
                                     return (
                                         <div key={i} className="flex text-center px-7 py-2 bg-gray-200 rounded-xl grid grid-cols-5 mt-5">
                                             <div className=" break-words">{a.developerName}</div>
-                                            <div className=" row-span-3 row-span-2 break-words">{a.prLink}</div>
-                                            <div className=" break-words">{a.reviewer}</div>
+                                            <div className=" row-span-3 row-span-2 break-words text-blue-700">{a.prLink}</div>
+                                            <div>{a.reviewer.map((e) =>
+                                                <div className="ps-2">{e}</div>
+                                            )}</div>
                                             <div className="">
                                                 {a.status}
 
